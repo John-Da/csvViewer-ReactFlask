@@ -11,7 +11,7 @@ function AllPlots() {
   const fileId = searchParams.get("id");
   const fileName = searchParams.get("filename");
 
-  const [metaData, setMetaData] = useState();
+  const [metaData, setMetaData] = useState<any[]>([]);
   const [fetchedData, setFetchedData] = useState<any[]>([]);
 
   // mainData of CSV File
@@ -39,6 +39,30 @@ function AllPlots() {
     setMetaData(JSON.parse(localData));
   }, []);
 
+
+  function formatTimestamp(isoString: string) {
+    const date = new Date(isoString);
+
+    const optionsDate: Intl.DateTimeFormatOptions = {
+      month: "short",
+      day: "2-digit",
+      year: "numeric",
+    };
+
+    const optionsTime: Intl.DateTimeFormatOptions = {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+    };
+
+    const formattedDate = date.toLocaleDateString("en-US", optionsDate);
+    const formattedTime = date.toLocaleTimeString("en-US", optionsTime);
+
+    return `${formattedDate} at ${formattedTime}`;
+  }
+
+
+
   return (
     <div className="allplots-container" >
       <div className="allplots-header">
@@ -63,6 +87,11 @@ function AllPlots() {
           </div>
           <div className="plots-areabox">
             <h2>Table</h2>
+
+            {fetchedData.map((row, index) => (
+              <p key={index}>{row.Name}</p>
+            ))}
+
           </div>
           <h1>Plots Name | Item(s): 100</h1>
         </div>
@@ -70,6 +99,15 @@ function AllPlots() {
           <h1>CSV File Info</h1>
           <div className="csvfiledata-infobox">
 
+            {metaData && metaData.map((row, index) => (
+              <div key={index} className="metaBox">
+                <p>{row.fileName}</p>
+                <p>{formatTimestamp(row.date)}</p>
+                <p>{row.author}</p>
+              </div>
+            ))}
+
+            <h3>Insights</h3>
           </div>
         </div>
       </div>
@@ -84,7 +122,7 @@ export default AllPlots;
 
 
 
-      {/* <pre>{JSON.stringify(metaData, null, 2)}</pre> 
+      {/* <pre>{JSON.stringify(metaData, null, 2)}</pre>
 
       {fetchedData.map((row, index) => (
         <p key={index}>{row.Name}</p>
