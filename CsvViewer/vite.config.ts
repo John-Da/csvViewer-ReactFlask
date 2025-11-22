@@ -6,14 +6,6 @@ export default defineConfig({
   plugins: [react()],
   base:"/csvPlotter-ReactFlask/",
   build: {
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          react: ['react', 'react-dom'],
-          charts: ['recharts'], 
-          ui: ['antd', 'material-ui'], 
-        },
-      },
-    },
+    chunkSizeWarningLimit: 1000,
   },
 })
