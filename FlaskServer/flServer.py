@@ -12,7 +12,7 @@ CORS(app, resources={
     r"/*": {
         "origins": [
             "https://john-da.github.io",
-            "https://john-da.github.io/csvPlotter-ReactFlask"
+            "https://john-da.github.io/csvViewer-ReactFlask"
         ]
     }
 })

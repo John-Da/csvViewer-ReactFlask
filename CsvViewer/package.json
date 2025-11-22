@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://john-da.github.io/csvPlotter-ReactFlask",
+  "homepage": "https://john-da.github.io/csvViewer-ReactFlask",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
