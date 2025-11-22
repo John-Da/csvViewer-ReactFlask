@@ -47,7 +47,7 @@ export const Porxy = 'https://csvviewer-flask.onrender.com'
 export const PageRoutes = {
   homepage: {path: `/`, component: Home},
   viewplotspage: {path: `/view-plots`, component: AllPlots},
-  waitingroompage: {path: `convert/file`, component: WaitingRoom},
+  waitingroompage: {path: `/convert/file`, component: WaitingRoom},
 }
 
 // export const PageRoutes = {
