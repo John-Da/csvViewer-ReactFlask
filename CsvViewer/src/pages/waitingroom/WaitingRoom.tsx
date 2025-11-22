@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import "../../index.css";
-import "./Waitingroom.css";
 import { useSearchParams } from "react-router-dom";
 import { PageRoutes, Porxy } from "../../Constants";
+import "../../index.css";
+import "./Waitingroom.css";
 
 function WaitingRoom() {
   const [searchParams] = useSearchParams();
@@ -10,54 +10,72 @@ function WaitingRoom() {
   const fileName = searchParams.get("filename");
   const fileType = searchParams.get("filetype");
 
-  const [readyDownload, setReadyDownload] = useState(false);
   const [percentage, setPercentage] = useState(0);
+  const [backendDone, setBackendDone] = useState(false);
+  const [readyDownload, setReadyDownload] = useState(false);
   const [convertedName, setConvertedName] = useState<string>("");
 
-  // Fake progress bar animation
+  // Animate progress bar
   useEffect(() => {
     let p = 0;
     const interval = setInterval(() => {
-      p += 3;
-      if (p > 95) p = 100;
+      p += 5;
+      if (p > 100) p = 100;
       setPercentage(p);
+      if (p === 100) clearInterval(interval);
     }, 80);
 
     return () => clearInterval(interval);
   }, []);
 
-  // Start backend conversion
+  // Fetch backend conversion
   useEffect(() => {
+    if (!fileId || !fileName || !fileType) return;
+
     fetch(`${Porxy}${PageRoutes.waitingroompage.path}?id=${fileId}&filename=${fileName}&filetype=${fileType}`)
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) throw new Error("Conversion failed");
+        return res.json();
+      })
       .then(data => {
         setConvertedName(data.converted_filename);
-        setPercentage(100);
-        setReadyDownload(true);
-      });
-  }, []);
+        setBackendDone(true);
+      })
+      .catch(err => console.error(err));
+  }, [fileId, fileName, fileType]);
 
+  // Enable download only when progress bar reaches 100% AND backend is done
+  useEffect(() => {
+    if (percentage === 100 && backendDone) {
+      setReadyDownload(true);
+    }
+  }, [percentage, backendDone]);
 
-
+  // Download converted file
   const handleDownload = async () => {
-    const url = `${Porxy}/download/file?id=${fileId}&filename=${fileName}&filetype=${fileType}`;
+    if (!fileId || !fileName || !fileType) return;
 
-    const res = await fetch(url);
-    const blob = await res.blob();
-    const downloadUrl = window.URL.createObjectURL(blob);
+    try {
+      const res = await fetch(`${Porxy}/download/file?id=${fileId}&filename=${fileName}&filetype=${fileType}`);
+      if (!res.ok) throw new Error("Download failed");
 
-    const a = document.createElement("a");
-    a.href = downloadUrl;
-    a.download = (convertedName ?? fileName) || `download.${fileType}`;
-    a.click();
-    window.URL.revokeObjectURL(downloadUrl);
+      const blob = await res.blob();
+      const url = window.URL.createObjectURL(blob);
+
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = convertedName || fileName || `download.${fileType}`;
+      a.click();
+      window.URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error(err);
+    }
   };
-
 
   return (
     <div className="emptypage-container">
       <div className="emptypage-topbox">
-        <h1>Converting CSV to JSON</h1>
+        <h1>Converting CSV to {fileType?.toUpperCase()}</h1>
       </div>
 
       <div className="emptypage-bottombox">
