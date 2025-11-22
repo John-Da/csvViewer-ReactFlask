@@ -5,7 +5,7 @@ import { PageRoutes } from "./Constants";
 function App() {
   return (
     <>
-    <Router>
+    <Router basename="/csvPlotter-ReactFlask">
       <NavBar />
       <Routes>
         <Route path={PageRoutes.homepage.path} Component={PageRoutes.homepage.component} />
