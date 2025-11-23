@@ -4,6 +4,8 @@
 This is a mini web application that allows users to upload CSV files and quickly visualize the data in tables, bar charts, or scatter plots. It is convenient, user-friendly, and ideal for small communities or departmental use, where quick data comparison and analysis are highly valuable.
 </p>
 
+<br/>
+
 ## 🛠️ Methodology
 - React for UX/UI and Flask for Backend
 - hosted React on GitHub and Flask on Render
@@ -19,6 +21,8 @@ This is a mini web application that allows users to upload CSV files and quickly
 - *only csv file is recommended for this project.*
 - Delay start up if no one is using. ( *Limitation for free plan of Render hosting* )
 - Be noted that this only works well in present, due to no cloude storing.
+
+<br/>
 
 ## 📦 Demo
 
