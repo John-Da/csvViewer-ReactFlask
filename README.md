@@ -18,6 +18,7 @@ This is a mini web application that allows users to upload CSV files and quickly
 - large amount of data can delay displaying the data on plots.
 - *only csv file is recommended for this project.*
 - Delay start up if no one is using. ( *Limitation for free plan of Render hosting* )
+- Be noted that this only works well in present, due to no cloude storing.
 
 ## 📦 Demo
 
