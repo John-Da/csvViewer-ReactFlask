@@ -41,25 +41,26 @@
   scrollbar-color: rgba(0,0,0,0.15) transparent; 
 }
 
-
 /* FLOATING TOP-CENTER OVERLAY */
 .statusLoading-box {
   position: fixed;
-  top: 2rem;                 /* distance from top */
+  top: 2rem;
   left: 50%;
-  transform: translateX(-50%); /* center horizontally */
-  
-  width: 20rem;
-  height: 10rem;
-  border-radius: 1.2rem;
+  transform: translateX(-50%);
+  z-index: 999;
+
+  width: 15rem;
+  height: 3.5rem;
+  padding: 0 1.2rem;
+  border-radius: 50rem;
 
   background: rgba(250, 250, 250, 0.92);
   box-shadow: 0 4px 20px rgba(0,0,0,0.1);
 
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  align-items: center;       /* vertical alignment fixed */
+  justify-content: center;   /* horizontal centering */
+  gap: 0.7rem;
 
   backdrop-filter: blur(4px);
   transition: opacity 0.8s ease-out, transform 0.8s ease-out;
@@ -74,23 +75,23 @@
 /* MOVE UP + FADE OUT */
 .fade-up {
   opacity: 0;
-  transform: translate(-50%, -40px);
+  transform: translate(-50%, -30px);
 }
 
-/* LOADING CIRCLE AREA */
+/* LOADING STATE */
 .loading {
   display: flex;
-  flex-direction: column;
   align-items: center;
+  gap: 0.7rem;
 }
 
 .loading-animation {
-  width: 50px;
-  height: 50px;
-  border: 5px solid #d2d2d2;
+  width: 22px;
+  height: 22px;
+  border: 3px solid #d2d2d2;
   border-top-color: #4a6cf7;
   border-radius: 50%;
-  animation: spin 1.2s linear infinite;
+  animation: spin 1s linear infinite;
 }
 
 @keyframes spin {
@@ -100,19 +101,21 @@
 }
 
 .loading span {
-  margin-top: 1rem;
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 500;
   color: #4a6cf7;
+  margin: 0;
 }
 
 /* CHECKMARK STATE */
 .done {
-  flex-direction: column;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
 }
 
 .checkmark {
-  font-size: 4rem;
+  font-size: 1.8rem;     /* scaled to fit capsule */
   font-weight: bold;
   color: #4caf50;
   animation: pop 0.4s ease-out;
@@ -120,14 +123,13 @@
 
 @keyframes pop {
   0% { transform: scale(0.5); opacity: 0; }
-  60% { transform: scale(1.2); opacity: 1; }
-  100% { transform: scale(1); opacity: 1; }
+  60% { transform: scale(1.25); opacity: 1; }
+  100% { transform: scale(1); }
 }
 
 .done span {
-  margin-top: 0.5rem;
-  font-size: 1.2rem;
-  font-weight: 500;
+  font-size: 1.3rem;
+  font-weight: 600;
   color: #4caf50;
+  margin: 0;
 }
-
